@@ -5,3 +5,4 @@ ios/** linguist-vendored
 windows/** linguist-vendored
 linux/** linguist-vendored
 macos/** linguist-vendored
+html/** linguist-vendored
