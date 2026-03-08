@@ -5,7 +5,7 @@ A cross-platform Flutter application for browsing and discovering movies. Built 
 ---
 
 ## 📱 Screenshots
-<img width="633" height="807" alt="allPages" src="https://github.com/user-attachments/assets/bbc46a29-6792-4087-bb18-d26442bddd8a" />
+<img width="1006" height="422" alt="all" src="https://github.com/user-attachments/assets/e1c04dbe-a2a1-4dbc-8e34-7e036679c1be" />
 
 
 
