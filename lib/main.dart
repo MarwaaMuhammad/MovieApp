@@ -26,10 +26,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return ValueListenableBuilder(
         valueListenable: vm.isDarkMode,
         builder:(context, value, child) {
           return MaterialApp(
+              debugShowCheckedModeBanner: false,
               theme: vm.isDarkMode.value ? ThemeData.dark() : ThemeData.light(),
               home: Homescreen()
           );
