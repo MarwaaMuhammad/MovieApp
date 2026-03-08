@@ -1,0 +1,38 @@
+import 'package:flutter/material.dart';
+import 'package:movieapp/View_Model/View_Model.dart';
+import 'package:movieapp/widgets/movie_card.dart';
+
+
+class FavoritesScreen extends StatelessWidget {
+  const FavoritesScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Favorite Movies"),
+        ),
+        body:
+        ValueListenableBuilder(
+          valueListenable: vm.favoriteMovies,
+          builder:(context, value, child) {
+            return vm.favoriteMovies.value.isEmpty ?
+
+            Center(
+              child: Text("No favorite movies added yet"),
+            )
+                : ListView.builder(
+                itemCount: vm.favoriteMovies.value.length,
+                itemBuilder: (context, index){
+                  return MovieCard(
+                      model: vm.favoriteMovies.value[index]
+                  );
+                }
+            );
+          },
+
+        )
+
+    );
+  }
+}

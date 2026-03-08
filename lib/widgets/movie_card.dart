@@ -1,0 +1,103 @@
+import 'package:flutter/material.dart';
+import 'package:movieapp/Models/Movie_Model.dart';
+import 'package:movieapp/View_Model/View_Model.dart';
+import 'package:movieapp/screens/Movie_detail.dart';
+import 'package:movieapp/widgets/category.dart';
+
+
+class MovieCard extends StatelessWidget {
+  const MovieCard({super.key, required this.model});
+
+  final MovieModel model;
+
+  @override
+  Widget build(BuildContext context) {
+    return  GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder:(context) => MovieDetailScreen(
+              model: model,
+            ),)
+        );
+      },
+      child: Container(
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadiusGeometry.circular(12),
+              child: Hero(
+                tag: model.id,
+                child: Image.network(
+                  "https://image.tmdb.org/t/p/w500/${model.posterPath}",
+                  width: 80,
+                  height: 120,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(width: 5,),
+            Expanded(
+              child: Container(
+                // color: Colors.red,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 5,
+                  children: [
+                    Text(model.title,style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+                    Row(
+                      children: [
+                        Icon(Icons.star,color: Colors.amber,),
+                        Text("${model.voteAverage.toStringAsFixed(1)}/10")
+                      ],
+                    ),
+                    const SizedBox(height: 3,),
+                    Wrap(
+                        spacing: 5,
+                        runSpacing: 10,
+                        // children: [
+                        //   CategoryCapsule(),
+                        //   CategoryCapsule(),
+                        //   CategoryCapsule(),
+                        // ],
+                        children: model.genres.map((id ){
+                          return CategoryCapsule(label: vm.genreMap[id] ?? "N/A");
+                        }).toList()
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.schedule_outlined,color: Colors.teal,),
+                        Text(model.releaseDate),
+                        Spacer(),
+                        ValueListenableBuilder(
+                            valueListenable: vm.favoriteMovies,
+                            builder: (context, value, child) {
+                              final isPresent = vm.favoriteMovies.value.contains(model);
+                              return IconButton(onPressed: (){
+
+                                if(isPresent){
+                                  vm.removeFromFavorite(model);
+                                }else{
+                                  vm.addToFavorite(model);
+                                }
+
+                              }, icon: Icon(
+                                isPresent ? Icons.favorite : Icons.favorite_border,
+                                color: isPresent ? Colors.red : null,
+                              )
+                              );
+                            }
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
